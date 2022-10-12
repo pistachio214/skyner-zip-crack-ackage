@@ -1,0 +1,87 @@
+
+### 更新时间：2022-10-12 ###
+
+### Java ignore ###
+*.class
+### Maven ignore ###
+target/
+.mvn
+
+### System ignore ###
+Thumbs.db
+.DS_Store
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ignore ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+
+### NetBeans ignore ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+
+### VS Code ###
+.vscode/
+/mvnw
+/mvnw.cmd
+
+### Package file ##
+*.war
+*.ear
+
+### Kdiff3 ignore ###
+*.orig
+
+### Eclipse ignore ###
+.settings/
+.classpatch
+
+
+### Temp file ###
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+
+### Vue ###
+node_modules
+/dist
+
+### local env files ###
+.env.local
+.env.*.local
+
+### Log files ###
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+### Editor directories and files ###
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+### 压缩包 ###
+*.rar
+*.zip
