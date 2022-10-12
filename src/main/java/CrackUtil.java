@@ -104,7 +104,7 @@ public class CrackUtil {
                 }
                 return;
             }
-            if(suffix.equals("rar")){
+            if(suffix.equals("rar")||suffix.equals("7z")){
                 //破解rar
                 boolean z = UnRar5Util.decompressFile(source,dest,pwd);
                 System.out.println("密码："+pwd+"  破解结果："+z);
@@ -117,6 +117,7 @@ public class CrackUtil {
                 }
                 return;
             }
+
 
         }
         for (String item : array) {

@@ -85,3 +85,8 @@ pnpm-debug.log*
 ### 压缩包 ###
 *.rar
 *.zip
+*.7z
+
+
+src/main/resources/
+src/test/

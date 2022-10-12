@@ -11,14 +11,7 @@ import java.util.Arrays;
 
 public class UnRar5Util {
 
-//    public static void main(String[] args) {
-//        //decompressFile("D:\\compressdemo\\ResetUID.7z","D:\\compressdemo\\ResetUID7z");
-//        //decompressFile("D:\\compressdemo\\ResetUID.zip","D:\\compressdemo\\ResetUIDzip");
-//        boolean z=decompressFile("/Users/dong4hang/Desktop/rar/111.rar","/Users/dong4hang/Desktop/rar/","111");
-//        if(z){
-//            System.out.println("破解成功");
-//        }
-//    }
+
     public static boolean decompressFile(String inputFilePath, final String targetFileDir,String pwd) {
         boolean r =false;
         //解压7zip文件
@@ -37,10 +30,10 @@ public class UnRar5Util {
                 inArchive = SevenZip.openInArchive(ArchiveFormat.RAR5, t,pwd);
             }
             else if(inputFilePath.endsWith("7z")){
-                inArchive = SevenZip.openInArchive(ArchiveFormat.SEVEN_ZIP, t);
+                inArchive = SevenZip.openInArchive(ArchiveFormat.SEVEN_ZIP, t,pwd);
             }
             else{
-                inArchive = SevenZip.openInArchive(ArchiveFormat.ZIP, t);
+                inArchive = SevenZip.openInArchive(ArchiveFormat.ZIP, t,pwd);
             }
             ISimpleInArchive simpleInArchive = inArchive.getSimpleInterface();
 
@@ -108,4 +101,8 @@ public class UnRar5Util {
         //System.out.println("return false");
         return r;
     }
+
+//    public static void main(String[] args) {
+//        decompressFile("/Users/dong4hang/Desktop/7z/Downloads1.7z","/Users/dong4hang/Desktop/7z/","111");
+//    }
 }
