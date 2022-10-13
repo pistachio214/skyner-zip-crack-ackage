@@ -6,7 +6,6 @@ import net.lingala.zip4j.model.FileHeader;
 
 import java.io.File;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 

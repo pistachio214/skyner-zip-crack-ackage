@@ -14,7 +14,7 @@
     <!--artifactId 标签：坐标向量之一；代表项目下的某一个模块-->
     <artifactId>crack-package</artifactId>
     <!--version 标签：坐标向量之一；代表当前模块的版本-->
-    <version>v1.0</version>
+    <version>v1.0.2</version>
 
     <!--packaging 标签：打包方式-->
     <!--取值jar：生成jar包，说明这是一个Java工程-->

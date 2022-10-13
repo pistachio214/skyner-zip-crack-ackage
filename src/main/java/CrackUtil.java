@@ -78,9 +78,9 @@ public class CrackUtil {
      * @param array  - 数组
      * @param curnum - 当前已经确定的个数
      * @param maxnum - 要选取的数目
-     * @source source - 要破解的文件路径
-     * @source dest - 破解后存放到哪里
-     * @source stime - 程序开始时间
+     * @param source - 要破解的文件路径
+     * @param dest - 破解后存放到哪里
+     * @param stime - 程序开始时间
      */
     public static void recursion(String[] array, int curnum, int maxnum,String source,String dest,long stime) {
         if (curnum == maxnum) {
