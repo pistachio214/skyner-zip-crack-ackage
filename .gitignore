@@ -85,6 +85,3 @@ pnpm-debug.log*
 *.rar
 *.zip
 *.7z
-
-
-src/main/resources/
