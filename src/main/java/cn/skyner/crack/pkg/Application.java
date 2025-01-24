@@ -1,9 +1,9 @@
-package com.dsh.crackpackage;
+package cn.skyner.crack.pkg;
 
-import com.dsh.crackpackage.impl.DictionaryService;
-import com.dsh.crackpackage.util.CrackUtil;
-import com.dsh.crackpackage.util.FileUtil;
-import com.dsh.crackpackage.util.LogUtil;
+import cn.skyner.crack.pkg.impl.DictionaryService;
+import cn.skyner.crack.pkg.util.CrackUtil;
+import cn.skyner.crack.pkg.util.FileUtil;
+import cn.skyner.crack.pkg.util.LogUtil;
 
 import java.io.File;
 import java.nio.file.Paths;

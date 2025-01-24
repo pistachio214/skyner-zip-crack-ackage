@@ -1,6 +1,0 @@
-This is a test file for MD5 calculation and compression testing.
-It contains multiple lines of text to make it more realistic.
-Line 1: Some random text
-Line 2: More random text
-Line 3: Even more random text
-The End.

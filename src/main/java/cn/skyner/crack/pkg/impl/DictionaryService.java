@@ -1,6 +1,7 @@
-package com.dsh.crackpackage.impl;
+package cn.skyner.crack.pkg.impl;
 
-import com.dsh.crackpackage.api.IDictionaryService;
+
+import cn.skyner.crack.pkg.api.IDictionaryService;
 
 import java.io.IOException;
 import java.nio.file.Files;

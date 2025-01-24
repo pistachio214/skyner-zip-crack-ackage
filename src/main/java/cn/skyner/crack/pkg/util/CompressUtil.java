@@ -1,23 +1,24 @@
-package com.dsh.crackpackage.util;
+package cn.skyner.crack.pkg.util;
 
-import net.lingala.zip4j.ZipFile;
-import net.lingala.zip4j.exception.ZipException;
 import com.github.junrar.Archive;
-import com.github.junrar.exception.RarException;
 import com.github.junrar.rarfile.FileHeader;
-import org.apache.commons.compress.archivers.*;
-import org.apache.commons.compress.compressors.*;
+import net.lingala.zip4j.ZipFile;
+import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.ArchiveInputStream;
+import org.apache.commons.compress.archivers.ArchiveStreamFactory;
+import org.apache.commons.compress.compressors.CompressorInputStream;
+import org.apache.commons.compress.compressors.CompressorStreamFactory;
 import org.apache.commons.compress.utils.IOUtils;
 
-import java.io.*;
-import java.nio.file.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 public class CompressUtil {
-    public enum CompressType {
-        ZIP, RAR, _7Z, TAR, GZ, BZ2, XZ, UNKNOWN
-    }
-
     public static CompressType getCompressType(String filePath) {
         String lowerPath = filePath.toLowerCase();
         if (lowerPath.endsWith(".zip")) return CompressType.ZIP;
@@ -95,7 +96,7 @@ public class CompressUtil {
         // 使用ProcessBuilder调用7z命令行工具
         try {
             ProcessBuilder pb = new ProcessBuilder(
-                "7z", "x", source, "-o" + dest, "-p" + password, "-y"
+                    "7z", "x", source, "-o" + dest, "-p" + password, "-y"
             );
             Process process = pb.start();
             int exitCode = process.waitFor();
@@ -108,8 +109,8 @@ public class CompressUtil {
     private static boolean unTar(String source, String dest) {
         try (InputStream is = Files.newInputStream(Paths.get(source));
              ArchiveInputStream ais = new ArchiveStreamFactory()
-                 .createArchiveInputStream(ArchiveStreamFactory.TAR, is)) {
-            
+                     .createArchiveInputStream(ArchiveStreamFactory.TAR, is)) {
+
             ArchiveEntry entry;
             while ((entry = ais.getNextEntry()) != null) {
                 if (!ais.canReadEntryData(entry)) {
@@ -134,9 +135,9 @@ public class CompressUtil {
     private static boolean unGzip(String source, String dest) {
         try (InputStream in = Files.newInputStream(Paths.get(source));
              CompressorInputStream gzIn = new CompressorStreamFactory()
-                 .createCompressorInputStream(CompressorStreamFactory.GZIP, in);
+                     .createCompressorInputStream(CompressorStreamFactory.GZIP, in);
              OutputStream out = Files.newOutputStream(Paths.get(dest))) {
-            
+
             IOUtils.copy(gzIn, out);
             return true;
         } catch (Exception e) {
@@ -147,9 +148,9 @@ public class CompressUtil {
     private static boolean unBzip2(String source, String dest) {
         try (InputStream in = Files.newInputStream(Paths.get(source));
              CompressorInputStream bzIn = new CompressorStreamFactory()
-                 .createCompressorInputStream(CompressorStreamFactory.BZIP2, in);
+                     .createCompressorInputStream(CompressorStreamFactory.BZIP2, in);
              OutputStream out = Files.newOutputStream(Paths.get(dest))) {
-            
+
             IOUtils.copy(bzIn, out);
             return true;
         } catch (Exception e) {
@@ -160,13 +161,17 @@ public class CompressUtil {
     private static boolean unXz(String source, String dest) {
         try (InputStream in = Files.newInputStream(Paths.get(source));
              CompressorInputStream xzIn = new CompressorStreamFactory()
-                 .createCompressorInputStream(CompressorStreamFactory.XZ, in);
+                     .createCompressorInputStream(CompressorStreamFactory.XZ, in);
              OutputStream out = Files.newOutputStream(Paths.get(dest))) {
-            
+
             IOUtils.copy(xzIn, out);
             return true;
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public enum CompressType {
+        ZIP, RAR, _7Z, TAR, GZ, BZ2, XZ, UNKNOWN
     }
 }

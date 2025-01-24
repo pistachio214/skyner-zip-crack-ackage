@@ -1,4 +1,4 @@
-package com.dsh.crackpackage.util;
+package cn.skyner.crack.pkg.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class FileUtil {
     private static final String ZIP_DIR = "zip_files";
     private static final String OUTPUT_DIR = "output";
     private static final String[] SUPPORTED_EXTENSIONS = {
-        ".zip", ".rar", ".7z", ".tar", ".gz", ".bz2", ".xz"
+            ".zip", ".rar", ".7z", ".tar", ".gz", ".bz2", ".xz"
     };
 
     public static void initDirectories() throws IOException {

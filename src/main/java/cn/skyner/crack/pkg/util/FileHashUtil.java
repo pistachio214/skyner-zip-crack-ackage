@@ -1,19 +1,32 @@
-package com.dsh.crackpackage.util;
+package cn.skyner.crack.pkg.util;
 
-import java.io.*;
-import java.nio.file.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
-import java.util.*;
-import java.nio.channels.FileChannel;
-import java.nio.ByteBuffer;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class FileHashUtil {
     private static final String FAILED_PASSWORDS_DIR = "failed_passwords";
     private static final int BUFFER_SIZE = 8192;
     private static final int WRITE_BATCH_SIZE = 1000; // 每1000个密码写入一次
     private static final int READ_BATCH_SIZE = 10000; // 每次读取10000行
-    private static Map<String, Set<String>> failedPasswordsCache = new HashMap<>();
-    private static Map<String, Integer> batchCounters = new HashMap<>();
+    private static final Map<String, Set<String>> failedPasswordsCache = new HashMap<>();
+    private static final Map<String, Integer> batchCounters = new HashMap<>();
+
+    // 添加关闭钩子，确保程序退出时写入所有缓存的密码
+    static {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("\n正在保存失败密码记录...");
+            flushAllFailedPasswords();
+        }));
+    }
 
     public static String calculateMD5(String filePath) {
         try {
@@ -67,7 +80,7 @@ public class FileHashUtil {
         try {
             Files.createDirectories(Paths.get(FAILED_PASSWORDS_DIR));
             Path failedPasswordsFile = Paths.get(FAILED_PASSWORDS_DIR, fileMD5 + ".txt");
-            
+
             // 如果文件不存在，直接写入
             if (!Files.exists(failedPasswordsFile)) {
                 Files.write(failedPasswordsFile, newPasswords);
@@ -82,7 +95,7 @@ public class FileHashUtil {
                 }
                 Files.write(failedPasswordsFile, mergedPasswords);
             }
-            
+
             // 清除缓存和计数器
             synchronized (failedPasswordsCache) {
                 failedPasswordsCache.get(fileMD5).clear();
@@ -112,29 +125,29 @@ public class FileHashUtil {
 
             // 获取文件大小
             long fileSize = Files.size(failedPasswordsFile);
-            int estimatedLines = (int)(fileSize / 10); // 假设每行平均10个字符
-            
+            int estimatedLines = (int) (fileSize / 10); // 假设每行平均10个字符
+
             // 创建一个合适大小的HashSet
             Set<String> failedPasswords = new HashSet<>(Math.min(estimatedLines, 1000000));
-            
+
             // 分批读取文件
             try (BufferedReader reader = Files.newBufferedReader(failedPasswordsFile)) {
                 String line;
                 int lineCount = 0;
                 int batchCount = 0;
-                
+
                 while ((line = reader.readLine()) != null) {
                     failedPasswords.add(line);
                     lineCount++;
-                    
+
                     // 每读取一定数量的行，显示进度
                     if (lineCount % READ_BATCH_SIZE == 0) {
                         batchCount++;
-                        System.out.printf("\r正在加载历史密码记录... 已加载 %d 批（每批 %d 个）", 
-                            batchCount, READ_BATCH_SIZE);
+                        System.out.printf("\r正在加载历史密码记录... 已加载 %d 批（每批 %d 个）",
+                                batchCount, READ_BATCH_SIZE);
                     }
                 }
-                
+
                 if (lineCount > READ_BATCH_SIZE) {
                     System.out.println(); // 换行
                 }
@@ -144,7 +157,7 @@ public class FileHashUtil {
             if (failedPasswordsCache.containsKey(fileMD5)) {
                 failedPasswords.addAll(failedPasswordsCache.get(fileMD5));
             }
-            
+
             return failedPasswords;
         } catch (IOException e) {
             System.out.println("读取失败密码时发生错误：" + e.getMessage());
@@ -161,13 +174,5 @@ public class FileHashUtil {
         } catch (IOException e) {
             System.out.println("清除失败密码记录时发生错误：" + e.getMessage());
         }
-    }
-
-    // 添加关闭钩子，确保程序退出时写入所有缓存的密码
-    static {
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("\n正在保存失败密码记录...");
-            flushAllFailedPasswords();
-        }));
     }
 }

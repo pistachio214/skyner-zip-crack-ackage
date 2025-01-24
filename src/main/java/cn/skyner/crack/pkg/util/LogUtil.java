@@ -1,4 +1,4 @@
-package com.dsh.crackpackage.util;
+package cn.skyner.crack.pkg.util;
 
 public class LogUtil {
     public static void info(String message) {

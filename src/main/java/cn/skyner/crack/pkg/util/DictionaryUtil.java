@@ -1,3 +1,5 @@
+package cn.skyner.crack.pkg.util;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
