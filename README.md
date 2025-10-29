@@ -178,4 +178,4 @@ CrackPackage/
 
 - 原作者 [shenhuanjie](https://github.com/shenhuanjie)
 
-感谢所有为这个项目做出贡献的开发者。
+- 感谢所有为这个项目做出贡献的开发者。
