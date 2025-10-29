@@ -2,6 +2,8 @@
 
 ## 项目概述
 
+该项目由大佬项目 [skyner-zip-crack-ackage](https://github.com/shenhuanjie/skyner-zip-crack-ackage) fork而来，并在这个基础上修改。
+
 CrackPackage是一个用Java开发的压缩文件密码破解工具，支持多种压缩格式（ZIP、RAR、7Z、TAR、GZ、BZ2、XZ等）的密码破解。该工具采用多种破解策略，包括字典攻击和暴力破解方法。
 
 ## 功能特性
@@ -170,8 +172,10 @@ CrackPackage/
 如有问题或建议，请通过以下方式联系：
 
 - 提交 Issue
-- 发送邮件至：[shenhuanjie@live.cn](mailto:shenhuanjie@live.cn)
+- 发送邮件至：[songyang410@outlook.com](mailto:songyang410@outlook.com)
 
 ## 致谢
+
+- 原作者 [shenhuanjie](https://github.com/shenhuanjie)
 
 感谢所有为这个项目做出贡献的开发者。

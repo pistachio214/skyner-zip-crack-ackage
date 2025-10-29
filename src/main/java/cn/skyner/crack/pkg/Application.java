@@ -11,8 +11,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Application {
-    private static final String ZIP_DIR = "zip_files";
     private static final String OUTPUT_DIR = "output";
+
+    private static int minLen = 1;
+    private static int maxLen = 10;
 
     public static void main(String[] args) {
         try {
@@ -46,11 +48,7 @@ public class Application {
         LogUtil.info("发现以下压缩文件：");
         for (int i = 0; i < zipFiles.size(); i++) {
             File file = new File(zipFiles.get(i));
-            LogUtil.info(String.format("%d. %s (%s)",
-                    i + 1,
-                    file.getName(),
-                    FileUtil.formatFileSize(file.length())
-            ));
+            LogUtil.info(String.format("%d. %s (%s)", i + 1, file.getName(), FileUtil.formatFileSize(file.length())));
         }
 
         // 选择要破解的文件
@@ -70,9 +68,9 @@ public class Application {
 
         // 输入密码长度范围
         System.out.print("请输入最小密码长度: ");
-        int minLen = scanner.nextInt();
+        minLen = scanner.nextInt();
         System.out.print("请输入最大密码长度: ");
-        int maxLen = scanner.nextInt();
+        maxLen = scanner.nextInt();
 
         if (minLen < 1 || maxLen < minLen) {
             LogUtil.error("无效的密码长度范围！");
@@ -86,17 +84,10 @@ public class Application {
         LogUtil.info("开始智能破解密码...");
         LogUtil.info("");
 
-        // 开始破解
-        String outputPath = Paths.get(OUTPUT_DIR,
-                selectedFile.replaceFirst("[.][^.]+$", "")).toString();
+        String outputPath = Paths.get(OUTPUT_DIR, getFileNameWithFileClass(selectedFile)).toString();
 
-        String password = CrackUtil.crack(
-                selectedFile,
-                outputPath,
-                1,
-                10,
-                new DictionaryService()
-        );
+        // 开始破解
+        String password = CrackUtil.crack(selectedFile, outputPath, minLen, maxLen, new DictionaryService());
 
         // 显示结果
         if (password != null) {
@@ -109,5 +100,10 @@ public class Application {
             LogUtil.info("2. 检查文件是否已损坏");
             LogUtil.info("3. 确认文件是否有密码保护");
         }
+    }
+
+    private static String getFileNameWithFileClass(String filePath) {
+        File file = new File(filePath);
+        return file.getName();
     }
 }
